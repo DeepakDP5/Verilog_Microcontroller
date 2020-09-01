@@ -39,10 +39,10 @@ module aclock (
   reg [3:0] c_sec0,a_sec0;
   /* The least significant minute digit of the temp clock and alarm.*/ 
   
-  function [3:0] mod_10;
+  function [3:0] div_10;
     input [5:0] number;
     begin
-      mod_10 = (number >=50) ? 5 : ((number >= 40)? 4 :((number >= 30)? 3 :((number >= 20)? 2 :((number >= 10)? 1 :0))));
+      div_10 = (number >=50) ? 5 : ((number >= 40)? 4 :((number >= 30)? 3 :((number >= 20)? 2 :((number >= 10)? 1 :0))));
     end
   endfunction
   
@@ -122,9 +122,9 @@ module aclock (
         c_hour1 = 0;
     end
     c_hour0 = tmp_hour - c_hour1*10; 
-    c_min1 = mod_10(tmp_minute); 
+    c_min1 = div_10(tmp_minute); 
     c_min0 = tmp_minute - c_min1*10;
-    c_sec1 = mod_10(tmp_second);
+    c_sec1 = div_10(tmp_second);
     c_sec0 = tmp_second - c_sec1*10; 
   end
 
